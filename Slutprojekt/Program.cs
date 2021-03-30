@@ -8,7 +8,7 @@ namespace Slutprojekt
         private static Random rand = new Random();
         enum Rooms
         {
-            Start,
+            Home,
             Train,
             Battle,
             Shop,
@@ -18,9 +18,10 @@ namespace Slutprojekt
         {
             string[] choices = new string[2];
             bool playing = true;
-            Rooms room = Rooms.Start;
-            Instructions();
+            Rooms room = Rooms.Home;
+            ConsoleKeyInfo key = Console.ReadKey(true);
             Player player = new Player();
+            Instructions();
             ChooseStarter(player);
 
             System.Console.WriteLine("you chose " + player.children[0].Name);
@@ -28,18 +29,19 @@ namespace Slutprojekt
 
             while (playing)
             {
-                UpdateRoomArrays(room, choices);
-
+                choices = UpdateRoomArrays(room, choices);
+                room = SelectRoom(choices, room);
+                Console.ReadLine();
 
             }
 
 
         }
-        static string[] UpdateRoomArrays(Rooms g, string[] s)
+        static string[] UpdateRoomArrays(Rooms g, string[] s)   //this one is outdated and not working se mickes meddelande för hur man gör om till klasser
         {
             switch (g)
             {
-                case Rooms.Start:
+                case Rooms.Home:
                     {
                         s = new string[4];
                         s[0] = "Train";
@@ -51,14 +53,14 @@ namespace Slutprojekt
                 case Rooms.Train:
                     {
                         s = new string[2];
-                        s[0] = "Start";
+                        s[0] = "Home";
                         s[1] = "Shop";
                         return s;
                     }
                 case Rooms.Shop:
                     {
                         s = new string[3];
-                        s[0] = "Start";
+                        s[0] = "Home";
                         s[1] = "Shop";
                         s[2] = "Battle";
                         return s;
@@ -66,14 +68,14 @@ namespace Slutprojekt
                 case Rooms.Battle:
                     {
                         s = new string[2];
-                        s[0] = "Start";
+                        s[0] = "Home";
                         s[1] = "Shop";
                         return s;
                     }
                 case Rooms.Quit:
                     {
                         s = new string[2];
-                        s[0] = "Start";
+                        s[0] = "Home";
                         return s;
                     }
                 default:
@@ -83,9 +85,9 @@ namespace Slutprojekt
                     }
             }
         }
-        static Rooms SelectRoom(string[] s, Rooms r)
+        static Rooms SelectRoom(string[] s, Rooms r)    //this one is outdated and not working se mickes meddelande för hur man gör om till klasser
         {
-            if (r == Rooms.Start)
+            if (r == Rooms.Home)
             {
                 switch (Selection(s))
                 {
@@ -110,7 +112,7 @@ namespace Slutprojekt
                         }
                     default:
                         {
-                            return Rooms.Start;
+                            return Rooms.Home;
                         }
                 }
             }
@@ -120,7 +122,7 @@ namespace Slutprojekt
                 {
                     case 0:
                         {
-                            return Rooms.Start;
+                            return Rooms.Home;
                         }
                     case 1:
                         {
@@ -138,7 +140,7 @@ namespace Slutprojekt
                 {
                     case 0:
                         {
-                            return Rooms.Start;
+                            return Rooms.Home;
                         }
                     case 1:
                         {
@@ -160,7 +162,7 @@ namespace Slutprojekt
                 {
                     case 0:
                         {
-                            return Rooms.Start;
+                            return Rooms.Home;
                         }
                     case 1:
                         {
@@ -178,7 +180,7 @@ namespace Slutprojekt
                 {
                     case 0:
                         {
-                            return Rooms.Start;
+                            return Rooms.Home;
                         }
                     default:
                         {
@@ -189,7 +191,7 @@ namespace Slutprojekt
             else
             {
                 System.Console.WriteLine("Overlode run. Room is now Start");
-                return Rooms.Start;
+                return Rooms.Home;
             }
         }
         static void Instructions()
@@ -271,13 +273,13 @@ namespace Slutprojekt
                         {
                             return current;
                         }
-                    default:
+                default:
                         {
-                            // handle everything else
-                        }
-                        break;
+                    // handle everything else
                 }
+                break;
             }
         }
     }
+}
 }
